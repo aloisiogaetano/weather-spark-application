@@ -1,0 +1,13 @@
+
+services:
+  spark-app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dockerfile
+    volumes:
+      - ./data:/app/data
+      - ./src:/app/src
+      - ./tests:/app/tests
+    environment:
+      - PYTHONPATH=/app
+    working_dir: /app
