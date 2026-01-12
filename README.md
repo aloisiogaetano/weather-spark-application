@@ -76,12 +76,12 @@ Tutti i dataset meteorologici (temperature, pressure, humidity) sono forniti in 
 
 - rendere il codice riutilizzabile e testabile
 
-Dati Sporchi e Assunzioni:
+👉 Dati Sporchi e Assunzioni:
 
--Valori nulli
+- Valori nulli
  - Gestiti tramite filtri espliciti o ignorati durante le aggregazioni (comportamento standard Spark).
 
--Timestamp malformati
+- Timestamp malformati
  - Le conversioni datetime sono centralizzate e mappate con i rispettivi timezone.
 
 - Città non presenti in tutti i dataset
@@ -108,15 +108,13 @@ I mesi primaverili sono valutati in AND (tutti devono soddisfare il criterio).
 
 API Spark Utilizzate
 
-groupBy
+- groupBy
 
-count
+- count
 
-filter
+- filter
 
-pivot
-
-funzioni datetime
+- funzioni datetime
 
 🌍 Task 2 – Statistiche Meteorologiche per Nazione
 Obiettivo
@@ -284,6 +282,7 @@ Parametrizzazione completa via config file
 
 
 Supporto multi-year e multi-timezone dinamico
+
 
 
 
