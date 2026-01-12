@@ -79,10 +79,10 @@ Tutti i dataset meteorologici (temperature, pressure, humidity) sono forniti in 
 Dati Sporchi e Assunzioni:
 
 -Valori nulli
- -Gestiti tramite filtri espliciti o ignorati durante le aggregazioni (comportamento standard Spark).
+ - Gestiti tramite filtri espliciti o ignorati durante le aggregazioni (comportamento standard Spark).
 
 -Timestamp malformati
- -Le conversioni datetime sono centralizzate e mappate con i rispettivi timezone.
+ - Le conversioni datetime sono centralizzate e mappate con i rispettivi timezone.
 
 - Città non presenti in tutti i dataset
  - Le join sono effettuate in modo conservativo (inner/left join a seconda del contesto).
@@ -284,5 +284,6 @@ Parametrizzazione completa via config file
 
 
 Supporto multi-year e multi-timezone dinamico
+
 
 
