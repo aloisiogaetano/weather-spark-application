@@ -237,17 +237,14 @@ Un singolo docker-compose.yml è sufficiente per:
 - estendere il progetto
 
 
-🔮 Possibili Sviluppi Futuri
+## 🔮 Possibili Sviluppi Futuri
 
-- Introduzione di Delta Lake
+- transformations e main piu generici da gestire attraverso config file
+- test edge-case
+- integrazione con kubernetes
+- lettura input e scrittura output da e su bucket
+- introduzione Delta table come formato di storage  
 
-- Validazione schema con Great Expectations
-
-Metriche e logging strutturato
-
-CI/CD con GitHub Actions
-
-Parametrizzazione completa via config file
 
 
 
