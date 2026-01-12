@@ -22,26 +22,39 @@ weather-spark-app/
 ├── src/
 │   ├── main.py
 │   ├── jobs/
-│   │   ├── clear_days.py
+│   │   ├── avg_temperature_diff.py
 │   │   ├── nation_stats.py
 │   │   └── seasonal_range.py
 │   │
 │   ├── transformations/
-│   │   ├── wide_to_long.py
-│   │   ├── join_metrics.py
-│   │   ├── convert_to_local.py
-│   │   ├── add_season.py
-│   │   ├── clear_days_logic.py
-│   │   └── aggregate_*.py
+|   |     ├── add_season.py
+|   |     ├── wide_to_long.py
+│   │     ├── aggregate_nation_stats.py
+|   |     ├── clear_days_logic.py
+|   |     ├── compute_seasonal_avg.py
+|   |     ├── compute_thermal_excursion.py
+|   |     ├── convert_to_local.py
+|   |     ├── filter_year_and_hours.py
+│   │     ├── join_metrics.py
+│   │     ├── rank_cities_by_country.py
+│   │     ├── timezone_utils.py
+|   |     ├── wide_to_long.py
 │   │
 │   └── utils/
 │       └── spark_session.py
 │
 ├── tests/
 │   ├── conftest.py
-│   ├── test_clear_days_logic.py
-│   ├── test_nation_stats.py
-│   └── test_seasonal_range.py
+│   ├── test_add_season.py
+│   ├── test_aggregate_nation_stats.py
+│   ├── test_clear_days.py
+│   ├── test_compute_seasonal_avg.py
+│   ├── test_compute_thermal_excursion.py
+│   ├── test_convert_to_local.py
+│   ├── test_filter_year_and_hours.py
+│   ├── test_join_metrics.py
+│   ├── test_rank_cities_by_country.py
+│   └── test_wide_to_long.py
 │
 ├── data/
 │   └── raw/
@@ -132,33 +145,33 @@ di temperatura, pressione e umidità.
 
 Tutti i dataset vengono:
 
-normalizzati (wide → long)
+- normalizzati (wide → long)
 
-rinominati semanticamente (temperature, pressure, humidity)
+- rinominati semanticamente (temperature, pressure, humidity)
 
-joinati su (datetime, city)
+- joinati su (datetime, city)
 
-Join con city_attributes.csv per ottenere la nazione
+- Join con city_attributes.csv per ottenere la nazione
 
-Conversione degli orari da UTC a fuso locale tramite mapping città → timezone
+- Conversione degli orari da UTC a fuso locale tramite mapping città → timezone
 
 Motivazione
 
 Separare:
 
-logica di reshaping
+- logica di reshaping
 
-logica di join
+- logica di join
 
-logica di aggregazione
+- logica di aggregazione
 
 rende il codice:
 
-testabile
+- testabile
 
-riutilizzabile
+- riutilizzabile
 
-facilmente estendibile
+- facilmente estendibile
 
 ### 🌡️ Task 3 – Escursione Termica Stagionale (Top 3 Città)
 Obiettivo
@@ -173,21 +186,21 @@ considerando solo la fascia oraria locale 12:00–15:00.
 
 **Scelte Chiave**
 
-Introduzione esplicita del concetto di stagione (add_season)
+- Introduzione esplicita del concetto di stagione (add_season)
 
-I mesi fuori dai periodi definiti vengono esclusi
+- I mesi fuori dai periodi definiti vengono esclusi
 
-Le medie stagionali sono calcolate aggregando tutti i mesi del periodo
+- Le medie stagionali sono calcolate aggregando tutti i mesi del periodo
 
-Ranking per nazione tramite Window + row_number
+- Ranking per nazione tramite Window + row_number
 
 Test
 
-Verifica assegnazione stagioni
+- Verifica assegnazione stagioni
 
-Verifica calcolo differenza termica
+- Verifica calcolo differenza termica
 
-Verifica ranking top 3 per nazione
+- Verifica ranking top 3 per nazione
 
 ## 🧪 Testing
 
@@ -244,6 +257,7 @@ Un singolo docker-compose.yml è sufficiente per:
 - integrazione con kubernetes
 - lettura input e scrittura output da e su bucket
 - introduzione Delta table come formato di storage  
+
 
 
 
