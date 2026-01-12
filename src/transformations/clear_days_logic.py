@@ -1,4 +1,5 @@
 from pyspark.sql import DataFrame, functions as F
+from transformations.wide_to_long import reshape_wide_to_long
 
 CLEAR_WEATHER_VALUES = ["sky is clear"]
 SPRING_MONTHS = [3, 4, 5]
@@ -8,30 +9,15 @@ MIN_CLEAR_DAYS_PER_MONTH = 15
 
 def find_spring_clear_cities(weather_df: DataFrame) -> DataFrame:
 
+   
     # -------------------------
-    # 1. Parse timestamp
+    # 1. Unpivot (wide -> long)
     # -------------------------
-    df = (
-        weather_df
-        .withColumn("timestamp", F.to_timestamp("datetime"))
-    )
-
+   
+    long_df = reshape_wide_to_long(
+        weather_df,value_col_name="weather_description").withColumn("timestamp", F.to_timestamp("datetime"))
     # -------------------------
-    # 2. Unpivot (wide -> long)
-    # -------------------------
-    city_columns = [c for c in df.columns if c not in ("datetime", "timestamp")]
-
-    long_df = df.select(
-        "timestamp",
-        F.expr(
-            f"stack({len(city_columns)}, "
-            + ", ".join([f"'{c}', `{c}`" for c in city_columns])
-            + ") as (city, weather_description)"
-        )
-    )
-
-    # -------------------------
-    # 3. Filter valid records
+    # 2. Filter valid records
     # -------------------------
     filtered = (
         long_df
@@ -44,7 +30,7 @@ def find_spring_clear_cities(weather_df: DataFrame) -> DataFrame:
     )
 
     # -------------------------
-    # 4. Clear hours per day
+    # 3. Clear hours per day
     # -------------------------
     daily_clear_hours = (
         filtered
@@ -54,7 +40,7 @@ def find_spring_clear_cities(weather_df: DataFrame) -> DataFrame:
     )
 
     # -------------------------
-    # 5. Clear days
+    # 4. Clear days
     # -------------------------
     clear_days = (
         daily_clear_hours
@@ -62,7 +48,7 @@ def find_spring_clear_cities(weather_df: DataFrame) -> DataFrame:
     )
 
     # -------------------------
-    # 6. Clear days per month
+    # 5. Clear days per month
     # -------------------------
     monthly_clear_days = (
         clear_days
@@ -73,7 +59,7 @@ def find_spring_clear_cities(weather_df: DataFrame) -> DataFrame:
     )
 
     # -------------------------
-    # 7. AND condition on months
+    # 6. AND condition on months
     # -------------------------
     result = (
         monthly_clear_days
