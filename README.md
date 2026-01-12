@@ -1,5 +1,5 @@
-Weather Spark Application
-📌 Overview
+# Weather Spark Application
+## 📌 Overview
 
 Questo progetto implementa una pipeline di data processing utilizzando Apache Spark per l’analisi di dati meteorologici storici.
 L’obiettivo è dimostrare la capacità di:
@@ -10,11 +10,9 @@ gestire dati reali e potenzialmente sporchi
 
 strutturare un progetto scalabile e testabile
 
-rendere l’applicazione portabile tramite Docker
-
 Il progetto risponde a tre task analitici distinti, ognuno implementato come job indipendente ma orchestrato tramite un unico entrypoint (main.py).
 
-🧱 Struttura del Progetto
+## 🧱 Struttura del Progetto
 ```
 weather-spark-app/
 │
@@ -53,10 +51,10 @@ weather-spark-app/
 └── README.md
 ```
 
-⚙️ Scelte Implementative (Design Decisions)
+### ⚙️ Scelte Implementative (Design Decisions)
 Tecnologie
 
-Apache Spark 3.5.x (PySpark)
+Apache Spark 3.5.1 (PySpark 3.5.1)
 Scelto per la sua capacità di gestire grandi volumi di dati, API dichiarative e ampia diffusione in ambienti enterprise.
 
 Docker
@@ -65,10 +63,10 @@ Garantisce riproducibilità dell’ambiente, isolamento delle dipendenze e porta
 PyTest
 Per test unitari e di integrazione sulle trasformazioni Spark.
 
-🧠 Gestione dei Dati
+### 🧠 Gestione dei Dati
 Dataset Wide → Long
 
-Tutti i dataset meteorologici (temperature, pressure, humidity, weather_description) sono forniti in formato wide, con una colonna per ogni città.
+Tutti i dataset meteorologici (temperature, pressure, humidity) sono forniti in formato wide, con una colonna per ogni città.
 
 👉 È stata introdotta una transformation comune reshape_wide_to_long per:
 
@@ -84,12 +82,12 @@ Valori nulli
 Gestiti tramite filtri espliciti o ignorati durante le aggregazioni (comportamento standard Spark).
 
 Timestamp malformati
-Le conversioni datetime sono centralizzate e fall-safe.
+Le conversioni datetime sono centralizzate e mappate con i rispettivi timezone.
 
 Città non presenti in tutti i dataset
 Le join sono effettuate in modo conservativo (inner/left join a seconda del contesto).
 
-📊 Task 1 – Analisi del Tempo Sereno in Primavera
+### 📊 Task 1 – Analisi del Tempo Sereno in Primavera
 Obiettivo
 
 Per ogni anno, individuare le città che hanno avuto almeno 15 giorni al mese (marzo, aprile, maggio) con tempo sereno.
@@ -286,3 +284,4 @@ Parametrizzazione completa via config file
 
 
 Supporto multi-year e multi-timezone dinamico
+
