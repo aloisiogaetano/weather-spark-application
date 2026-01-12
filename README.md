@@ -15,6 +15,7 @@ rendere l’applicazione portabile tramite Docker
 Il progetto risponde a tre task analitici distinti, ognuno implementato come job indipendente ma orchestrato tramite un unico entrypoint (main.py).
 
 🧱 Struttura del Progetto
+```
 weather-spark-app/
 │
 ├── docker/
@@ -50,6 +51,7 @@ weather-spark-app/
 ├── requirements.txt
 ├── docker-compose.yml
 └── README.md
+```
 
 ⚙️ Scelte Implementative (Design Decisions)
 Tecnologie
@@ -281,5 +283,6 @@ Metriche e logging strutturato
 CI/CD con GitHub Actions
 
 Parametrizzazione completa via config file
+
 
 Supporto multi-year e multi-timezone dinamico
